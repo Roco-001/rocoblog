@@ -1,0 +1,9 @@
+<div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+   {% for post in show_most_commented_posts_categorias %}
+  <div class="post-entry-1 border-bottom">
+    <div class="post-meta"><span class="date">{{post.categories.name}}</span> <span class="mx-1">&bullet;</span> <span>{{post.created}}</span></div>
+    <h2 class="mb-2"><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+    <span class="author mb-3 d-block">{{post.author}}</span>
+  </div>
+  {% endfor %}
+</div> <!-- End Popular -->

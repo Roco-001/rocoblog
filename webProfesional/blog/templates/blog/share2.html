@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% block title %}Shared{% endblock %}
+{% load static %}
+{% block content %}
+
+ <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="{% url 'blog:post_list' %}">Home</a></li>
+          <li><a href="{% url 'blog:post_list' %}">Compartir</a></li>
+          <li>{{post.title}}</li>
+        </ol>
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+
+      <section id="blog" class="blog">
+          <div class="container" data-aos="fade-up">
+
+            <div class="row">
+
+        <div class="col-12 entries">
+             {% if sent %}
+                    <h2>""{{ post.title }}" ha sido enviado con exitó {{ form.cleaned_data.to }}. </h2>
+                 {% else %}
+                   <p >Comparte    <b>"{{ post.title }}"</b> por correo.  </p>
+
+                <form method="post">
+                  <div class="row">
+                        <div class="col-md-6 form-group">
+                              <table>
+                              {{ form.as_table }}
+                                  {% csrf_token %}
+                              </table>
+                              <button type="submit" class="btn btn-primary">Envia e-mail</button>
+              </div>
+            </div>
+          </form>
+
+  {% endif %}
+                </div>
+            </div>
+          </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}

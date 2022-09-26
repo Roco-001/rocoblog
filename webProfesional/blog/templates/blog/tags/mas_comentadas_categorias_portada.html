@@ -1,0 +1,12 @@
+
+<div class="col-lg-4 border-start custom-border">
+    {% for post in comentadas_posts_categories %}
+      <div class="post-entry-1">
+        {% if post.portada %}
+        <a href="{{post.get_absolute_url}}"><img src="{{post.portada.url}}" alt="" class="img-fluid"></a>
+        {%endif %}
+        <div class="post-meta"><span class="date">{{post.category.name}}</span> <span class="mx-1">&bullet;</span> <span>{{post.created}}</span></div>
+        <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+      </div>
+     {% endfor %}
+    </div>

@@ -1,0 +1,23 @@
+<div class="text-start py-4">
+          <div class="custom-pagination">
+           {% if page_obj.has_previous %}
+               <a href="?page={{ page_obj.previous_page_number }}" class="prev">Previous</a>
+              {% else %}
+                <a class="prev">Previous</a>
+              {% endif %}
+
+              {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                  <a href="#" class="active">{{ i }} </a>
+                {% else %}
+                  <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="next">Next</a>
+              {% else %}
+                <a class="next" >Next</a>
+              {% endif %}
+          </div>
+        </div>

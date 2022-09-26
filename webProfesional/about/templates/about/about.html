@@ -1,0 +1,110 @@
+{% extends 'core/base.html' %}
+{% block title %}Aboout{% endblock %}
+{% load static %}
+
+{% block content %}
+
+ {% for about in abouts   %}
+    <section>
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-lg-12 text-center mb-5">
+            <h1 class="page-title">{{about.name}}</h1>
+          </div>
+        </div>
+
+        <div class="row mb-5">
+
+          <div class="d-md-flex post-entry-2 half">
+            <a href="#" class="me-4 thumbnail">
+              {%if about.imagen1 %}
+              <img src="{{about.imagen1.url}}" alt="" class="img-fluid">
+              {%endif  %}
+            </a>
+            <div class="ps-md-5 mt-4 mt-md-0">
+              <div class="post-meta mt-4">{{about.name}}</div>
+              <h2 class="mb-4 display-4">{{about.titulo1}}</h2>
+
+              <p>{{about.subtitulo1|safe}}</p>
+
+            </div>
+          </div>
+
+          <div class="d-md-flex post-entry-2 half mt-5">
+            <a href="#" class="me-4 thumbnail order-2">
+              {%if about.imagen2 %}
+              <img src="{{about.imagen2.url}}" alt="" class="img-fluid">
+                {%endif  %}
+            </a>
+            <div class="pe-md-5 mt-4 mt-md-0">
+              <div class="post-meta mt-4">{{about.titulo2}}</div>
+              <h2 class="mb-4 display-4">{{about.titulo2}}</h2>
+
+              <p>{{about.subtitulo2|safe}}</p>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="mb-5 bg-light py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="row justify-content-between align-items-lg-center">
+          <div class="col-lg-5 mb-4 mb-lg-0">
+            <h2 class="display-4 mb-4">{{about.titulo3|capfirst}}</h2>
+            <p>{{about.subtitulo3|safe}}</p>
+
+            <p><a href="#" class="more">View All Blog Posts</a></p>
+          </div>
+          <div class="col-lg-6">
+            <div class="row">
+
+              <div class="col-6">
+                  {%if about.imagen3 %}
+                <img src="{{about.imagen3.url}}" alt="" class="img-fluid mb-4">
+                 {%endif  %}
+              </div>
+              <div class="col-6 mt-4">
+                  {%if about.imagen4 %}
+                <img src="{{about.imagen4.url}}" alt="" class="img-fluid mb-4">
+                 {%endif  %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-12 text-center mb-5">
+            <div class="row justify-content-center">
+              <div class="col-lg-6">
+                <h2 class="display-4">Nuestro Equipo</h2>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-4 text-center mb-5">
+            {%if about.equipo.image %}
+            <img src="{{about.equipo.image.url}}" alt="" class="img-fluid rounded-circle w-50 mb-4">
+            {% endif %}
+            <h4>{{about.equipo.name}}</h4>
+            <span class="d-block mb-3 text-uppercase">{{about.equipo.cargo}}</span>
+            <p>{{about.equipo.content|safe}}</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+{% endfor %}
+
+
+ {% endblock %}

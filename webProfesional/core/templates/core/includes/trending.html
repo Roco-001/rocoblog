@@ -1,0 +1,22 @@
+{% load blog_tags %}
+  <div class="col-lg-4">
+        <div class="trending">
+          <h3>Trending</h3>
+
+            {% trending  1 7  as trendings %}
+          <ul class="trending-post">
+
+            {% for post in trendings %}
+            <li>
+              <a href="{{post.get_absolute_url}}">
+                <span class="number">{{forloop.counter}}</span>
+                <h3>{{post.title}}</h3>
+                <span class="author">{{post.author}}</span>
+              </a>
+            </li>
+             {% endfor %}
+
+          </ul>
+        </div>
+
+</div>

@@ -1,0 +1,177 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+{% load static %}
+{% load blog_tags %}
+{% block content %}
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="{% url 'blog:post_list' %}">Home</a></li>
+          <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+          <li>{{post.title}}</li>
+        </ol>
+         {% with comments.count as total_comments %}
+        <h2 class="text-center">Esta publicación tiene {{ total_comments }} comentario{{ total_comments|pluralize }} </h2>
+          {% endwith %}
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+
+
+    <!-- ======= Blog Single Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-lg-8 entries">
+            <article class="entry entry-single">
+              {% if  post.portada %}
+              <div class="entry-img">
+                <img src="{{post.portada.url}}" alt="{{post.title}}" class="img-fluid">
+              </div>
+                {% endif %}
+              <h2 class="entry-title">
+                {{post.title}}
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center text-secondary"><i class="bi bi-person"></i>{{post.author}}</li>
+                  <li class="d-flex align-items-center text-secondary"><i class="bi bi-clock"></i><time datetime="{{post.publish|date:'d-M-Y'}}">{{post.publish|date:'d-M-Y'}}</time></li>
+                  {% with comments.count as total_comments %}
+                  <li class="d-flex align-items-center text-secondary"><i class="bi bi-chat-dots"></i>  {{ total_comments }} Comentario{{ total_comments|pluralize }}</li>
+                  {% endwith %}
+
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>
+                  {{post.body|safe}}
+                </p>
+
+              </div>
+
+              <div class="entry-footer">
+                <i class="bi bi-share-fill"></i>
+                <ul class="cats">
+                  <li><a href="{% url 'blog:post_share'  post.id post.slug %}">Compartir</a></li>
+                </ul>
+
+                <i class="bi bi-tags"></i>
+
+                    <ul class="tags">
+                      {% for tag in post.tags.all %}
+                      <li><a href="{% url 'blog:post_list' %}?tag={{ tag.slug }}">{{ tag.name }}</a></li>
+                      {% if not forloop.last %}, {% endif %}
+                      {% endfor %}
+                    </ul>
+
+              </div>
+
+            </article><!-- End blog entry -->
+
+            <div class="blog-comments">
+              {% with comments.count as total_comments %}
+              <h4 class="comments-count">{{ total_comments }} comentario{{ total_comments|pluralize }}</h4>
+              {% endwith %}
+
+              {% for comment in comments %}
+              <div id="comment-1" class="comment">
+                <div class="d-flex">
+                  <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
+                  <div>
+                    <h5><a href="">{{ comment.name }}</a></h5>
+                    <time datetime="{{comment.created|date:'d-M-Y'}}">{{comment.created|date:'d-M-Y'}}</time>
+                    <p>
+                     {{ comment.body|safe|linebreaks }}
+                    </p>
+                  </div>
+                </div>
+              </div><!-- End comment #1 -->
+
+              {% empty %}
+                 <p class="text-center">Esta publicación aun no tiene comentarios.</p>
+
+            {% endfor %}
+
+              <div class="reply-form">
+                  {% if new_comment %}
+                    <h2>Tu comentario ha sido añadido correctamente...</h2>
+                    {% else %}
+                  <h4>Deja una respuesta</h4>
+                <p>Su dirección de correo electrónico no será publicada. Los campos obligatorios están marcados * </p>
+                <form method="post">
+                  <div class="row">
+                        <div class="col-md-6 form-group">
+                              <table>
+                              {{ comment_form.as_table }}
+                                  {% csrf_token %}
+                              </table>
+                              <button type="submit" class="btn btn-primary">Escriba un Comentario</button>
+                          </div>
+                        </div>
+                      </form>
+
+              {% endif %}
+              </div>
+
+            </div><!-- End blog comments -->
+
+          </div><!-- End blog entries list -->
+
+          <div class="col-lg-4">
+
+            <div class="sidebar">
+              <h3 class="sidebar-title">Categorias</h3>
+
+                    {% for category in categories %}
+              <div class="sidebar-item categories">
+                <ul>
+                  <li><a href="{% url 'blog:category' category.id category.name|slugify %}">{{category.name}} <span>{{category.id|total_category}}</span></a></li>
+                    {% endfor %}
+                </ul>
+              </div><!-- End sidebar categories-->
+
+              <h3 class="sidebar-title">Publicaciones Similares</h3>
+              <div class="sidebar-item recent-posts">
+                {% for post in similar_posts %}
+
+
+                <div class="post-item clearfix">
+                   {% if  post.portada %}
+                    <img src="{{post.portada.url}}" alt="">
+                    {% endif %}
+                    <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+                    <time datetime="{{ post.created }}">{{ post.created }}</time>
+                  </div>
+                  {% empty %}
+                  <h4>No hay publicaciones similares.</h4>
+                  {% endfor %}
+                </div><!-- End sidebar recent posts-->
+
+              <h3 class="sidebar-title">Tags</h3>
+              <div class="sidebar-item tags">
+                <ul>
+                  {% for tag in post.tags.all %}
+                  <li><a href="{% url 'blog:post_list' %}?tag={{ tag.slug }}">{{tag.name}}</a></li>
+                  {% endfor %}
+                </ul>
+              </div><!-- End sidebar tags-->
+
+            </div><!-- End sidebar -->
+
+          </div><!-- End blog sidebar -->
+
+        </div>
+
+      </div>
+    </section><!-- End Blog Single Section -->
+
+  </main><!-- End #main -->
+
+ {% endblock %}

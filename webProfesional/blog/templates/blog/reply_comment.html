@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %}Compartir{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section id="contact" class="contact mb-5">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-12 text-center mb-5">
+              <h1 class="page-title">Responder a un Comentario</h1>
+          </div>
+        </div>
+
+        <div class="form mt-5 ">
+         <form  method="POST"  >
+             {%  csrf_token  %}
+            <div class="row" >
+              <div class="form-group col-md-6">
+               <input type="text" value="{{request.user}}" name="name" class="form-control">
+              </div>
+              <div class="form-group col-md-6">
+               <input type="text" value="{{request.user.email}}" name="email" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group">
+              {{reply_form.body}}
+            </div>
+            <div class="my-3">
+
+              {% if sent %}
+              <div style="color:green;" class="sent-message">"{{ post.title|truncatechars:30 }}" ha sido enviado con exitó a {{ form.cleaned_data.to }}.</div>
+              {% endif %}
+            </div>
+               <div class="text-center php-email-form"><button type="submit">Envia e-mail</button></div>
+          </form>
+        </div><!-- End Contact Form -->
+
+      </div>
+    </section>
+
+
+
+{% endblock %}
